@@ -174,11 +174,7 @@ on boot
     # Allow access for CCID command/response timeout configuration
     chown system system /sys/module/ccid_bridge/parameters/bulk_msg_timeout
 
-    # bond0 used by FST Manager
-    chown wifi wifi /sys/class/net/bond0/bonding/queue_id
-
-    # Fingerprint
-        # Goodix Fingerprint
+    # Goodix Fingerprint
     chown system system /dev/goodix_fp
     chmod 0644 /dev/goodix_fp        
     
@@ -187,11 +183,11 @@ on boot
     
     #weidong,add the fp sensor infomation,20161122,start
     on property:persist.sys.fp.vendor=switchf
-	setprop ro.boot.fpsensor fpc
+    setprop ro.boot.fpsensor fpc
 
     on property:persist.sys.fp.vendor=goodix
-	setprop ro.boot.fpsensor gdx
-	setprop goodix.fp.miui.analyse 1
+    setprop ro.boot.fpsensor gdx
+    setprop goodix.fp.miui.analyse 1
     #weidong,add the fp sensor infomation,20161122,end
 
     chown system system /sys/devices/soc/soc:fpc1020/compatible_all
@@ -432,31 +428,8 @@ service ss_ramdump /system/bin/subsystem_ramdump
     group system
     disabled
 
-on property:hw.fm.init=*
-    write /sys/module/radio_iris_transport/parameters/fmsmd_set ${hw.fm.init}
-
-on property:persist.sys.ssr.enable_debug=*
-    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.sys.ssr.enable_debug}
-
-on property:persist.sys.mba_boot_timeout=*
-    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.sys.mba_boot_timeout}
-
-on property:persist.sys.modem_auth_timeout=*
-    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.sys.modem_auth_timeout}
-
-on property:persist.sys.pil_proxy_timeout=*
-    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.sys.pil_proxy_timeout}
-
 on property:persist.sys.ssr.restart_level=*
     start ssr_setup
-
-on property:persist.sys.ssr.enable_ramdumps=1
-    write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
-    mkdir /data/ramdump 770 system system
-    start ss_ramdump
-
-on property:persist.sys.ssr.enable_ramdumps=0
-    write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
 
 on property:sys.boot_completed=1
     write /dev/kmsg "Boot completed "
