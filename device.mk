@@ -185,14 +185,13 @@ PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service \
     fingerprintd
 
+TARGET_FS_CONFIG_GEN += \
+    device/xiaomi/santoni/fs_config/file_caps.fs
+
 # FM
 PRODUCT_PACKAGES += \
     FMRadio \
     libfmjni
-
-#FS
-TARGET_FS_CONFIG_GEN += \
-    device/xiaomi/santoni/configs.fs
 
 # GPS
 PRODUCT_PACKAGES += \
