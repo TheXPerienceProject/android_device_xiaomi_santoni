@@ -165,7 +165,7 @@ TARGET_NO_RPC := true
 
 # Filesystem
 #TARGET_ANDROID_FILESYSTEM_CONFIG_H := $(LOCAL_PATH)/android_filesystem_config.h
-TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/config.fs
+TARGET_FS_CONFIG_GEN := $(LOCAL_PATH)/config.fs
 
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_santoni
