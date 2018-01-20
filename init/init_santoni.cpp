@@ -48,6 +48,7 @@ char const *large_cache_height;
 
 static std::string board_id;
 using android::base::GetProperty;
+using android::init::property_set;
 
 static void import_cmdline(const std::string& key,
         const std::string& value, bool for_emulator __attribute__((unused)))
@@ -134,7 +135,7 @@ void init_variant_properties()
     if (device != "santoni")
         return;
 
-    import_kernel_cmdline(0, import_cmdline);
+    android::init::import_kernel_cmdline(0, import_cmdline);
     
     //set board
     property_set("ro.product.wt.boardid", board_id.c_str());
