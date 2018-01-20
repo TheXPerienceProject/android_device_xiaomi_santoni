@@ -81,9 +81,6 @@
     <!-- Is the notification LED intrusive? Used to decide if there should be a disable option -->
     <bool name="config_intrusiveNotificationLed">true</bool>
 
-    <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
-    <bool name="config_intrusiveBatteryLed">true</bool>
-
     <!-- When true use the linux /dev/input/event subsystem to detect the switch changes
          on the headphone/microphone jack. When false use the older uevent framework. -->
     <bool name="config_useDevInputEventForAudioJack">true</bool>
@@ -134,7 +131,7 @@
     -->
     <integer name="config_longPressOnHomeBehavior">2</integer>
 
-    <!-- Control the behavior when the user long presses the app switch button.
+    <!-- Control the behavior when the user long presses the menu button.
             0 - Nothing
             1 - Menu key
             2 - Recent apps view in SystemUI
@@ -142,12 +139,13 @@
             4 - Voice Search
             5 - In-app Search
             6 - Launch camera
-            7 - Turn screen off
+            7 - sleep
             8 - Last app
+			9 - Toggle split screen
          This needs to match the constants in
-         services/core/java/com/android/server/policy/PhoneWindowManager.java
+         policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
     -->
-    <integer name="config_longPressOnAppSwitchBehavior">3</integer>
+    <integer name="config_longPressOnMenuBehavior">2</integer>
 
     <!-- Wifi driver supports batched scan -->
     <bool translatable="false" name="config_wifi_batched_scan_supported">true</bool>
@@ -159,7 +157,7 @@
     <bool translatable="false" name="config_wifi_background_scan_support">true</bool>
 
     <!-- Boolean indicating whether Hotspot 2.0/Passpoint and ANQP queries is enabled -->
-    <bool translatable="false" name="config_wifi_hotspot2_enabled">true</bool>
+    <!--<bool translatable="false" name="config_wifi_hotspot2_enabled">true</bool>-->
 
     <!-- This string array should be overridden by the device to present a list of network
          attributes.  This is used by the connectivity manager to decide which networks can coexist
@@ -270,9 +268,6 @@
     <!-- Flag specifying whether VoLTE is available on device -->
     <bool name="config_device_volte_available">true</bool>
   
-    <!-- VoLTE provisioning -->
-    <bool name="config_carrier_volte_provisioned">true</bool>
-	
     <!-- Flag specifying whether VoLTE should be available for carrier: independent of
          carrier provisioning. If false: hard disabled. If true: then depends on carrier
          provisioning, availability etc -->
@@ -374,12 +369,5 @@
 
     <!-- Flag specifying whether WFC over IMS is available on device -->
     <bool name="config_device_wfc_ims_available">true</bool>
-
-    <!-- Support in Surfaceflinger for blur layers.
-         NOTE: This requires additional hardware-specific code. -->
-    <bool name="config_uiBlurEnabled">true</bool>
-
-    <!-- Whether notify fingerprint client of successful cancelled authentication -->
-    <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool>
 
 </resources>
