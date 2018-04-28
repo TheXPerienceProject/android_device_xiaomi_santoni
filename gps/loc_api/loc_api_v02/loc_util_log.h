@@ -1,4 +1,4 @@
-/* Copyright (c) 2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2012, 2014, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -24,31 +24,63 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
-#ifndef XTRA_SYSTEM_STATUS_OBS_H
-#define XTRA_SYSTEM_STATUS_OBS_H
+#ifndef LOC_UTIL_LOG_H
+#define LOC_UTIL_LOG_H
 
-#include <stdint.h>
+#include <platform_lib_log_util.h>
 
+#if defined(_ANDROID_)
+#include "loc_api_v02_log.h"
 
-class XtraSystemStatusObserver {
-public :
-    // constructor & destructor
-    XtraSystemStatusObserver() {
-    }
+#else // no _ANDROID_
 
-    virtual ~XtraSystemStatusObserver() {
-    }
+#if defined(__LOC_API_V02_LOG_SILENT__)
+#define MSG_LOG
+#define LOC_LOGE(...) MSG_LOG(__VA_ARGS__);
+#define LOC_LOGW(...) MSG_LOG(__VA_ARGS__);
+#define LOC_LOGD(...) MSG_LOG(__VA_ARGS__);
+#define LOC_LOGI(...) MSG_LOG(__VA_ARGS__);
+#define LOC_LOGV(...) MSG_LOG(__VA_ARGS__);
+#elif !defined(USE_GLIB)
 
-    bool updateLockStatus(uint32_t lock);
-    bool updateConnectionStatus(bool connected, uint8_t type);
+// common for QNX and Griffon
 
-private:
-    int createSocket();
-    void closeSocket(const int32_t socketFd);
-    bool sendEvent(std::stringstream& event);
+//error logs
+#define LOC_LOGE(...) printf(__VA_ARGS__)
+//warning logs
+#define LOC_LOGW(...) printf(__VA_ARGS__)
+// debug logs
+#define LOC_LOGD(...) printf(__VA_ARGS__)
+//info logs
+#define LOC_LOGI(...) printf(__VA_ARGS__)
+//verbose logs
+#define LOC_LOGV(...) printf(__VA_ARGS__)
+#endif //__LOC_API_V02_LOG_SILENT__
 
-};
+#define MODEM_LOG_CALLFLOW(SPEC, VAL)
+#define EXIT_LOG_CALLFLOW(SPEC, VAL)
 
-#endif
+#define loc_get_v02_event_name(X) #X
+#define loc_get_v02_client_status_name(X) #X
+
+#define loc_get_v02_qmi_status_name(X)  #X
+
+//specific to OFF TARGET
+#ifdef LOC_UTIL_TARGET_OFF_TARGET
+
+# include <stdio.h>
+# include <asm/errno.h>
+# include <sys/time.h>
+
+// get around strl*: not found in glibc
+// TBD:look for presence of eglibc other libraries
+// with strlcpy supported.
+#define strlcpy(X,Y,Z) strcpy(X,Y)
+#define strlcat(X,Y,Z) strcat(X,Y)
+
+#endif //LOC_UTIL_TARGET_OFF_TARGET
+
+#endif //_ANDROID_
+
+#endif //LOC_UTIL_LOG_H

@@ -1,4 +1,4 @@
-/* Copyright (c) 2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -9,7 +9,7 @@
  *       copyright notice, this list of conditions and the following
  *       disclaimer in the documentation and/or other materials provided
  *       with the distribution.
- *     * Neither the name of The Linux Foundation, nor the names of its
+ *     * Neither the name of The Linux Foundation nor the names of its
  *       contributors may be used to endorse or promote products derived
  *       from this software without specific prior written permission.
  *
@@ -26,29 +26,25 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef XTRA_SYSTEM_STATUS_OBS_H
-#define XTRA_SYSTEM_STATUS_OBS_H
 
-#include <stdint.h>
+#ifndef LOC_API_V02_LOG_H
+#define LOC_API_V02_LOG_H
 
-
-class XtraSystemStatusObserver {
-public :
-    // constructor & destructor
-    XtraSystemStatusObserver() {
-    }
-
-    virtual ~XtraSystemStatusObserver() {
-    }
-
-    bool updateLockStatus(uint32_t lock);
-    bool updateConnectionStatus(bool connected, uint8_t type);
-
-private:
-    int createSocket();
-    void closeSocket(const int32_t socketFd);
-    bool sendEvent(std::stringstream& event);
-
-};
-
+#ifdef __cplusplus
+extern "C"
+{
 #endif
+
+#include <loc_log.h>
+#include <loc_api_v02_client.h>
+
+const char* loc_get_v02_event_name(uint32_t event);
+const char* loc_get_v02_client_status_name(locClientStatusEnumType status);
+const char* loc_get_v02_qmi_status_name(qmiLocStatusEnumT_v02 status);
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* LOC_API_V02_LOG_H */
